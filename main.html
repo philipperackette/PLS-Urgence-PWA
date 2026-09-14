@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f5f9">
+  <meta name="description" content="Guide pas à pas pour mettre en position latérale de sécurité une personne inconsciente qui respire normalement.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="PLS Urgence">
+  <title>PLS Urgence</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#app">Aller au guide</a>
+  <header class="emergency-header">
+    <div>
+      <p class="brand">PLS URGENCE</p>
+      <p class="brand-subtitle">Victime inconsciente</p>
+    </div>
+    <a class="call-button" href="tel:112" aria-label="Appeler le 112">
+      <span aria-hidden="true">☎</span>
+      <span>APPELER<br><strong>112</strong></span>
+    </a>
+  </header>
+
+  <main id="app" tabindex="-1" aria-live="polite"></main>
+
+  <noscript>
+    <section class="card noscript">
+      <h1>JavaScript est nécessaire</h1>
+      <p>Activez JavaScript pour utiliser le guide pas à pas. En cas d’urgence, appelez le 112.</p>
+    </section>
+  </noscript>
+
+  <footer id="offline-status" role="status">Chargement du mode hors ligne…</footer>
+  <script src="app.js" defer></script>
+</body>
+</html>
