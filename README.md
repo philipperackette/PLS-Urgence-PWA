@@ -2,6 +2,8 @@
 
 Application statique complète, sans dépendance ni compilation. Version du 14 septembre 2026.
 
+https://philipperackette.github.io/PLS-Urgence-PWA/
+
 ## Ouvrir
 
 Décompressez le ZIP et ouvrez `index.html`. Pour installer la PWA, publiez tout le contenu du dossier sur un hébergement HTTPS, puis ouvrez le site et utilisez « Ajouter à l’écran d’accueil » ou « Installer » selon le navigateur. Le guide devient disponible hors ligne après un premier chargement complet et l’affichage « Guide disponible hors ligne ». L’appel au 112 nécessite une connexion téléphonique ; la voix dépend des voix présentes sur l’appareil.
