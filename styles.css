@@ -181,7 +181,6 @@ p { line-height: 1.42; }
 
 .tip { margin: 1rem 0; padding: .75rem 1rem; border-radius: 18px; background: var(--tip); font-weight: 800; text-align: center; }
 .instruction-title { margin: 1rem .2rem .6rem; font-size: clamp(1.75rem, 7vw, 2.7rem); }
-.instruction { margin: 0; font-size: 1.08rem; text-align: center; }
 .guide-nav { display: grid; grid-template-columns: 64px 1fr; gap: .75rem; margin-top: 1.2rem; }
 .guide-nav .back { padding: 0; font-size: 2rem; }
 
@@ -219,8 +218,58 @@ p { line-height: 1.42; }
 .instruction-title { font-size:clamp(1.5rem,5vw,2rem); margin-top:.6rem; }
 .breathing-alert { margin-top:1rem; font-size:.8rem; min-height:48px; }
 .button:disabled { opacity:.45; cursor:default; }
-#offline-status { display:block; text-align:center; padding: .75rem; font-size:.75rem; color:var(--muted); }
-@media (min-width:620px) { .diagram-card { max-width:390px; } }
-@media (max-height:750px) { .diagram-card { max-width:280px; } }
+#offline-status { display:block; margin:0; text-align:center; padding: .75rem .75rem .25rem; font-size:.75rem; color:var(--muted); }
 
 .scene { aspect-ratio: 3 / 4; }
+
+/* Boutons empilés directement dans l’écran : espacement régulier. */
+.screen > .button, .screen > .card + .button { margin-top: .75rem; }
+.screen h1:focus { outline: none; }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* Téléphone : l’image tient dans l’écran et la navigation reste accessible
+   en bas sans faire défiler la page. */
+.diagram-card { max-width: min(390px, calc(46svh * .75), 100%); }
+.guide-nav {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  margin: 1rem -1rem 0;
+  padding: .65rem 1rem max(.65rem, env(safe-area-inset-bottom));
+  background: rgba(244,245,249,.97);
+  border-top: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+}
+.side-bar { font-size: .92rem; }
+.side-bar span { min-width: 0; }
+.side-bar button { min-height: 44px; min-width: 44px; padding: 0 .25rem; white-space: nowrap; }
+@media (min-width: 620px) {
+  .guide-nav { margin-inline: -2rem; padding-inline: 2rem; }
+}
+
+/* Écran d’installation */
+.install-os { margin: 1.2rem 0 0; font-size: 1.15rem; letter-spacing: 0; }
+.app-footer { padding-bottom: max(.75rem, env(safe-area-inset-bottom)); text-align: center; }
+#install-link { display: inline-block; min-height: 44px; padding: .6rem 1rem; color: var(--blue); font-size: .9rem; font-weight: 700; }
+#install-link[hidden] { display: none; }
+
+/* Consigne entre le titre et l’image, visible sans défiler. */
+.instruction { margin: 0 .2rem .8rem; font-size: 1.05rem; font-weight: 600; text-align: left; line-height: 1.35; }
+
+/* Petits téléphones : en-tête et entête d’étape plus compacts. */
+@media (max-width: 380px) {
+  .emergency-header { gap: .5rem; padding-inline: .9rem; }
+  .brand { font-size: 1.1rem; white-space: nowrap; }
+  .brand-subtitle { font-size: .85rem; }
+  .call-button { min-width: 104px; padding-inline: .8rem; }
+}
+@media (max-height: 700px) {
+  .emergency-header { min-height: 64px; }
+  .call-button { min-height: 50px; }
+  .step-label { font-size: 1.05rem; }
+  .side-bar { margin-bottom: .6rem; padding-block: .3rem; }
+  .instruction-title { margin-top: .3rem; }
+}
