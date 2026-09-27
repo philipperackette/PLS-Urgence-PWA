@@ -28,7 +28,7 @@ La page s’enregistre sur le téléphone et une icône **« PLS Urgence »** ap
 
 Ces explications sont aussi dans l’application, via le lien « Mettre une icône sur mon téléphone » en bas de l’écran. Le lien disparaît quand l’application est ouverte depuis l’icône. Sur Android, un bouton permet d’ajouter l’icône directement quand le navigateur le propose.
 
-L’appel au 112 passe par le téléphone et fonctionne sans internet ; la lecture vocale dépend des voix présentes sur l’appareil.
+L’appel au 112 passe par le téléphone et fonctionne sans internet ; la lecture vocale dépend des voix présentes sur l’appareil. **Sur iPhone, la voix est coupée en mode silencieux** : désactivez-le (bouton sur le côté du téléphone) et montez le volume.
 
 ## Ouvrir en local
 
@@ -44,6 +44,7 @@ Décompressez le ZIP et ouvrez `index.html`. Le mode hors ligne et l’icône n�
 - Sur téléphone : les boutons « Étape suivante » et « Précédent » restent visibles en bas de l’écran, la consigne est affichée sous le titre, l’image s’adapte à la hauteur de l’écran.
 - L’écran reste allumé pendant l’intervention (si le navigateur le permet).
 - Un rechargement accidentel ramène à l’écran en cours ; le choix de la lecture vocale est mémorisé.
+- Mises à jour : l’application s’ouvre toujours depuis sa copie hors ligne, puis vérifie le site en arrière-plan ; une nouvelle version publiée s’affiche à l’ouverture suivante.
 - Fin du décompte de 10 secondes : vibration et annonce pour les lecteurs d’écran. Flèches gauche / droite du clavier pour changer d’étape.
 - `apercu.html` présente toute la séquence et permet d’inverser le côté.
 - `DESCRIPTIF-IMAGES.md` décrit les positions à contrôler.

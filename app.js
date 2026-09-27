@@ -118,17 +118,57 @@ document.addEventListener('visibilitychange', () => {
   if (wakeLockWanted && document.visibilityState === 'visible') requestWakeLock();
 });
 
+/* ---------- Lecture vocale ----------
+   Safari (iPhone) ignore souvent une lecture lancée juste après cancel() :
+   on n'annule que si une lecture est en cours, et on attend un court instant
+   après une annulation. L'énoncé en cours est conservé dans une variable, sinon
+   Safari peut le libérer et couper la voix. Une voix française est choisie
+   explicitement quand l'appareil en propose une. */
+const synth = 'speechSynthesis' in window ? window.speechSynthesis : null;
+let frenchVoice = null;
+let currentUtterance = null;
+let lastCancel = 0;
+let speechToken = 0;
+
+function pickFrenchVoice() {
+  const voices = synth ? synth.getVoices() : [];
+  const fr = voices.filter(v => (v.lang || '').toLowerCase().replace('_', '-').startsWith('fr'));
+  frenchVoice = fr.find(v => v.lang.replace('_', '-') === 'fr-FR' && v.localService)
+    || fr.find(v => v.lang.replace('_', '-') === 'fr-FR')
+    || fr[0] || null;
+}
+if (synth) {
+  pickFrenchVoice();
+  if (synth.addEventListener) synth.addEventListener('voiceschanged', pickFrenchVoice);
+  else synth.onvoiceschanged = pickFrenchVoice;
+}
+
 function stopSpeech() {
-  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+  speechToken += 1; // annule une lecture différée pas encore lancée
+  if (synth && (synth.speaking || synth.pending)) {
+    synth.cancel();
+    lastCancel = Date.now();
+  }
 }
 
 function speak(text) {
   stopSpeech();
-  if (!voiceEnabled || !('speechSynthesis' in window)) return;
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'fr-FR';
-  utterance.rate = 0.92;
-  window.speechSynthesis.speak(utterance);
+  if (!voiceEnabled || !synth) return;
+  const token = speechToken;
+  const say = () => {
+    if (token !== speechToken) return;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = frenchVoice ? frenchVoice.lang : 'fr-FR';
+    if (frenchVoice) utterance.voice = frenchVoice;
+    utterance.rate = 0.92;
+    utterance.onend = utterance.onerror = () => { if (currentUtterance === utterance) currentUtterance = null; };
+    currentUtterance = utterance;
+    if (synth.paused) synth.resume();
+    synth.speak(utterance);
+  };
+  // Premier appel : immédiat, pendant le geste de l'utilisateur (exigé par iPhone).
+  const wait = 250 - (Date.now() - lastCancel);
+  if (wait > 0) setTimeout(say, wait); else say();
 }
 
 function setScreen(name, html) {
@@ -254,7 +294,8 @@ function renderSideChoice() {
     <div class="side-choices">
       <button class="side-choice" data-action="choose-left">${diagram('supine','gauche')}<strong>À GAUCHE DE L’IMAGE</strong><span>À droite de la victime</span></button>
       <button class="side-choice" data-action="choose-right">${diagram('supine','droite')}<strong>À DROITE DE L’IMAGE</strong><span>À gauche de la victime</span></button>
-    </div><p class="tiny">Le sauveteur porte du bleu. Le même côté sera conservé pendant toute la séquence.</p>`);
+    </div><p class="tiny">Le sauveteur porte du bleu. Le même côté sera conservé pendant toute la séquence.</p>
+    ${isIOS() ? '<p class="tiny">Lecture vocale&nbsp;: sur iPhone, désactivez le mode silencieux (bouton sur le côté du téléphone) et montez le volume.</p>' : ''}`);
 }
 
 function renderGuide(announce = true) {
@@ -352,7 +393,7 @@ function renderInstall() {
     </div>`}
     <div class="card">
       <p><strong>Pour vérifier&nbsp;:</strong> touchez la nouvelle icône une première fois avec une connexion internet et attendez le message « Guide disponible hors ligne » en bas de l’écran. Le guide fonctionnera ensuite sans internet.</p>
-      <p class="tiny">L’appel au 112 passe par le téléphone et fonctionne sans internet. La lecture vocale utilise les voix installées sur l’appareil.</p>
+      <p class="tiny">L’appel au 112 passe par le téléphone et fonctionne sans internet. La lecture vocale utilise les voix installées sur l’appareil&nbsp;; sur iPhone, elle est coupée en mode silencieux.</p>
     </div>
     <button class="button secondary" data-action="restart">RETOUR</button>
   `);
