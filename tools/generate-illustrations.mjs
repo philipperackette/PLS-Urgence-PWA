@@ -106,9 +106,13 @@ const HAND_EDGE = 'M-9 4 L-10 -22 Q-11 -40 -4 -48 Q2 -52 6 -46 L9 -24 L13 -30 Q1
  * Main au bout de l'avant-bras `from` → `wrist`.
  * `flip` : main gauche/droite (pouce de l'autre côté) ; `view` : 'palm', 'back' ou 'edge'.
  */
-function hand(from, wrist, { flip = false, view = 'palm', scale = 0.74, turn = 0 } = {}) {
-  const rot = deg(sub(wrist, from)) + 90 + turn;
-  const s = flip ? `scale(${-scale} ${scale})` : `scale(${scale})`;
+function hand(from, wrist, { flip = false, view = 'palm', scale = 0.74, turn = 0, aim = null, squash = 1 } = {}) {
+  // `aim` : direction absolue des doigts (degrés) ; sinon, dans le prolongement de l'avant-bras.
+  // `squash` : main inclinée (vue de biais), plus étroite.
+  const rot = (aim ?? deg(sub(wrist, from))) + 90 + turn;
+  const s = squash === 1
+    ? (flip ? `scale(${-scale} ${scale})` : `scale(${scale})`)
+    : `scale(${r((flip ? -scale : scale) * squash * 100) / 100} ${scale})`;
   const shape = view === 'edge' ? HAND_EDGE : HAND;
   const body = path(shape, { fill: C.skin, 'stroke-width': 2.4 }) +
     (view === 'palm' ? path(PALM, { stroke: C.skinLine, 'stroke-width': 1.6 }) : '');
@@ -413,8 +417,13 @@ scenes.align = () => svg('Alignez les jambes',
 /* Bras proche à angle droit, paume vers le haut. */
 const armRightAngle = { elbow: P(209, 194), wrist: P(209, 98), hand: { scale: 0.7, flip: true } };
 /* Dos de la main éloignée contre l'oreille proche ; coude sur la poitrine. */
-const farHandAtEar = { wrist: P(368, 168), bend: -1, hand: { scale: 0.7, view: 'back', turn: 34 } };
-const holdHandAtEar = (p) => rescuerArm(p, 'up', P(340, 158), { hand: { turn: 40 } });
+/*
+ * Dos de la main éloignée contre l'oreille proche (à gauche du visage) :
+ * main posée de biais contre le côté de la tête, doigts vers le haut de la tête.
+ * La main du sauveteur est paume contre paume, juste à côté.
+ */
+const farHandAtEar = { wrist: P(364, 150), bend: -1, hand: { scale: 0.7, view: 'back', aim: -92, squash: 0.7, flip: true } };
+const holdHandAtEar = (p) => rescuerArm(p, 'up', P(344, 154), { hand: { view: 'back', aim: -95, squash: 0.8 } });
 
 scenes.nearArm = () => svg('Placez le bras proche à angle droit, paume vers le haut',
   floor() +

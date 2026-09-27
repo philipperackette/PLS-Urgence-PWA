@@ -4,19 +4,23 @@ Application statique complète, sans dépendance ni compilation. Version du 27 s
 
 https://philipperackette.github.io/PLS-Urgence-PWA/
 
+<p align="center"><img src="qr-code.svg" width="220" alt="QR code vers https://philipperackette.github.io/PLS-Urgence-PWA/"></p>
+
+<p align="center">Scannez ce QR code avec l’appareil photo du téléphone pour ouvrir le guide.</p>
+
 ## Mettre une icône sur le téléphone (à faire une seule fois)
 
 La page s’enregistre sur le téléphone et une icône **« PLS Urgence »** apparaît sur l’écran d’accueil. Il suffit de le faire une seule fois, à l’avance : ensuite le guide s’ouvre d’un geste, en plein écran, même sans connexion internet.
 
 **iPhone / iPad**
 
-1. Ouvrez https://philipperackette.github.io/PLS-Urgence-PWA/ dans **Safari**.
+1. Ouvrez https://philipperackette.github.io/PLS-Urgence-PWA/ dans **Safari** (ou scannez le QR code ci-dessus avec l’appareil photo).
 2. Touchez le bouton **Partager** (carré avec une flèche vers le haut).
 3. Choisissez **« Sur l’écran d’accueil »** (faites défiler la liste si besoin), puis **Ajouter**.
 
 **Android**
 
-1. Ouvrez https://philipperackette.github.io/PLS-Urgence-PWA/ dans **Chrome**.
+1. Ouvrez https://philipperackette.github.io/PLS-Urgence-PWA/ dans **Chrome** (ou scannez le QR code ci-dessus avec l’appareil photo).
 2. Touchez le menu **⋮** en haut à droite.
 3. Choisissez **« Ajouter à l’écran d’accueil »** ou **« Installer l’application »**, puis confirmez.
 
@@ -44,6 +48,7 @@ Décompressez le ZIP et ouvrez `index.html`. Le mode hors ligne et l’icône n�
 - `apercu.html` présente toute la séquence et permet d’inverser le côté.
 - `DESCRIPTIF-IMAGES.md` décrit les positions à contrôler.
 - Les SVG dans `images/` sont générés par `tools/generate-illustrations.mjs` (`node tools/generate-illustrations.mjs`, sans dépendance) : longueurs de membres fixes, coudes et genoux calculés, génération refusée si une position est impossible.
+- `qr-code.svg` : QR code vers le site, affiché en haut de ce document.
 - L’icône est `icons/icon.svg` (lettres « PLS » dessinées en tracés) ; les PNG sont exportés avec `tools/export-icons.cjs` (nécessite Playwright).
 
 ## Vérifications réalisées
