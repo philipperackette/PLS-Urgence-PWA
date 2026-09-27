@@ -52,6 +52,8 @@ Avec votre main libre, relevez le genou éloigné en le saisissant par-dessous.
 
 Repère : Le pied reste posé au sol ; la main reste contre l’oreille.
 
+Dessin : la main du sauveteur passe sous le genou relevé ; seuls ses doigts dépassent derrière le genou.
+
 Image : `images/knee.svg`.
 
 ## 6. Faites rouler vers vous

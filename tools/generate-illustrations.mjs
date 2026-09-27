@@ -209,17 +209,21 @@ function supineLegs({ ankleN = P(344, 690), ankleF = P(456, 690), kneeUpF = null
   const kneeN = ik('jambe proche', V.hipN, ankleN, L.thigh, L.shin, 1);
   s += limb([V.hipN, kneeN, ankleN], L.legWidth, C.trousers) + shoeTop(ankleN, deg(sub(ankleN, kneeN)));
   if (kneeUpF) {
-    // Genou relevé : cuisse et jambe inclinées, donc raccourcies en vue de dessus.
-    s += shoeTop(kneeUpF.ankle, 90);
-    s += limb([kneeUpF.knee, kneeUpF.ankle], L.legWidth - 2, C.trousers);
-    s += limb([V.hipF, kneeUpF.knee], L.legWidth + 2, C.trousersLine);
-    s += ellipse(kneeUpF.knee, 25, 22, { fill: C.trousersLine });
-    s += path(poly([lerp(V.hipF, kneeUpF.knee, 0.25), lerp(V.hipF, kneeUpF.knee, 0.85)]), { stroke: '#7d8fa6', 'stroke-width': 2 });
+    s += raisedLeg(kneeUpF);
   } else {
     const kneeF = ik('jambe éloignée', V.hipF, ankleF, L.thigh, L.shin, -1);
     s += limb([V.hipF, kneeF, ankleF], L.legWidth, C.trousers) + shoeTop(ankleF, deg(sub(ankleF, kneeF)));
   }
   return s;
+}
+
+/** Jambe éloignée relevée : cuisse et jambe inclinées, donc raccourcies en vue de dessus. */
+function raisedLeg({ knee, ankle }) {
+  return shoeTop(ankle, 90) +
+    limb([knee, ankle], L.legWidth - 2, C.trousers) +
+    limb([V.hipF, knee], L.legWidth + 2, C.trousersLine) +
+    ellipse(knee, 25, 22, { fill: C.trousersLine }) +
+    path(poly([lerp(V.hipF, knee, 0.25), lerp(V.hipF, knee, 0.85)]), { stroke: '#7d8fa6', 'stroke-width': 2 });
 }
 
 /* Bras de la victime sur le dos. */
@@ -439,13 +443,18 @@ scenes.farArm = () => svg('Placez le dos de la main opposée contre l’oreille,
     arrow('M510 336 Q500 250 440 226', { head: P(430, 222), dir: 196 })) +
   rescuer({ lean: 30, arms: (p) => restDown(p) + holdHandAtEar(p) }));
 
-const kneeUp = { knee: P(452, 474), ankle: P(440, 600) };
-scenes.knee = () => svg('Relevez le genou opposé, pied au sol',
+/*
+ * Genou relevé, saisi par-dessous : la jambe relevée est redessinée par-dessus
+ * le bras du sauveteur, dont la main passe sous le genou (seuls le bout des
+ * doigts dépassent de l'autre côté).
+ */
+const kneeUp = { knee: P(442, 474), ankle: P(436, 600) };
+scenes.knee = () => svg('Relevez le genou opposé en le saisissant par-dessous, pied au sol',
   floor() +
   victim(ghost([V.hipF, P(430, 540), P(428, 694)], 30) +
-    supine({ legs: { ankleN: P(372, 694), kneeUpF: kneeUp }, armN: armRightAngle, armF: farHandAtEar, armFOver: true }) +
-    arrow('M464 676 Q478 630 462 606', { head: P(458, 598), dir: -115 })) +
-  rescuer({ lean: 60, arms: (p) => holdHandAtEar(p) + rescuerArm(p, 'down', P(425, 476), { hand: { view: 'back', turn: -30 } }) }));
+    supine({ legs: { ankleN: P(372, 694), kneeUpF: kneeUp }, armN: armRightAngle, armF: farHandAtEar, armFOver: true })) +
+  rescuer({ lean: 80, arms: (p) => holdHandAtEar(p) + rescuerArm(p, 'down', P(436, 482), { hand: { aim: 8 } }) }) +
+  victim(raisedLeg(kneeUp) + arrow('M462 676 Q476 630 460 606', { head: P(456, 598), dir: -115 })));
 
 /* Après le retournement : main du sauveteur sous la tête, recouverte par la tête. */
 const handUnderHead = rescuerArm(rescuerPose(30), 'up', P(318, 140), { hand: { turn: 10 } });
