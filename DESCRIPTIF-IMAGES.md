@@ -2,9 +2,17 @@
 
 ## Règles communes
 
-Vue de dessus, tête en haut et pieds en bas. Victime en gris, sauveteur en bleu à gauche de l’image. Deux bras et deux jambes par personne. Aucun changement d’angle de caméra. Une seule nouvelle action par étape ; les appuis déjà obtenus sont conservés. Pour l’autre côté, la totalité de la scène subit une symétrie autour de son axe vertical, sans transformation des textes.
+Vue de dessus, tête en haut et pieds en bas. Victime en tee-shirt gris et jean ; sauveteur en bleu, pantalon foncé, à genoux à gauche de l’image, au niveau du thorax, à une distance qui permet de tourner la victime vers lui. Deux bras et deux jambes par personne. Aucun changement d’angle de caméra. Une seule nouvelle action par étape ; les appuis déjà obtenus sont conservés. Pour l’autre côté, la totalité de la scène subit une symétrie autour de son axe vertical ; aucun texte n’est placé dans les images.
 
-Après le retournement, la main opposée de la victime reste sous la joue proche : le dos de cette main soutient la tête, la paume est dirigée vers le sol. L’oreille supérieure reste dégagée. Le dessin de la tête recouvre celui de la main pour représenter ce contact.
+Les flèches orange indiquent le mouvement de l’étape. Les tracés gris en pointillés montrent la position précédente d’un membre.
+
+Après le retournement, la victime est sur le côté, face au sauveteur : jambe du dessous tendue dans l’axe, jambe du dessus pliée à angle droit à la hanche et au genou, genou au sol ; bras du dessous à angle droit, paume vers le haut. La main opposée reste sous la joue : le dos de cette main soutient la tête, la paume est dirigée vers le sol. L’oreille supérieure reste dégagée. Le dessin de la tête recouvre celui de la main pour représenter ce contact.
+
+## Génération
+
+Les SVG de `images/` sont produits par `tools/generate-illustrations.mjs` (Node.js, sans dépendance) : `node tools/generate-illustrations.mjs`. Chaque bras et chaque jambe a une longueur fixe ; le coude et le genou sont calculés à partir de l’épaule ou de la hanche et de la position voulue de la main ou du pied. Une position impossible à atteindre arrête la génération au lieu de produire un membre étiré. Pour modifier une image, modifiez la scène correspondante dans ce fichier puis relancez-le.
+
+`images/supine.svg` montre la position de départ (écran du choix du côté).
 
 ## 1. Retirez les lunettes
 

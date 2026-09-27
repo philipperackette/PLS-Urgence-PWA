@@ -1,6 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="112" fill="#ff3740"/>
-  <circle cx="256" cy="256" r="166" fill="#fff"/>
-  <path d="M256 117v278M117 256h278" stroke="#ff3740" stroke-width="78" stroke-linecap="round"/>
-  <path d="M142 380c43 21 85 29 126 24" fill="none" stroke="#158bff" stroke-width="26" stroke-linecap="round"/>
+  <rect width="512" height="512" rx="112" fill="#d82e38"/>
+  <!-- Lettres PLS dessinées en tracés (pas de police nécessaire) -->
+  <g fill="none" stroke="#fff" stroke-width="50" stroke-linecap="round" stroke-linejoin="round" transform="translate(12.8 37.6) scale(0.8532)">
+    <path d="M92 351 V161 H140 A52 52 0 0 1 140 265 H92"/>
+    <path d="M262 161 V351 H326"/>
+    <path d="M478 186 C460 156 398 154 398 206 C398 254 478 248 478 300 C478 356 410 358 388 322"/>
+  </g>
 </svg>
