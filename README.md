@@ -44,6 +44,7 @@ Décompressez le ZIP et ouvrez `index.html`. Le mode hors ligne et l’icône n�
 - Sur téléphone : les boutons « Étape suivante » et « Précédent » restent visibles en bas de l’écran, la consigne est affichée sous le titre, l’image s’adapte à la hauteur de l’écran.
 - L’écran reste allumé pendant l’intervention (si le navigateur le permet).
 - Un rechargement accidentel ramène à l’écran en cours ; le choix de la lecture vocale est mémorisé.
+- Mises à jour : l’application s’ouvre toujours depuis sa copie hors ligne, puis vérifie le site en arrière-plan ; une nouvelle version publiée s’affiche à l’ouverture suivante.
 - Fin du décompte de 10 secondes : vibration et annonce pour les lecteurs d’écran. Flèches gauche / droite du clavier pour changer d’étape.
 - `apercu.html` présente toute la séquence et permet d’inverser le côté.
 - `DESCRIPTIF-IMAGES.md` décrit les positions à contrôler.
