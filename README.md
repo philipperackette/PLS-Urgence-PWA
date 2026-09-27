@@ -28,7 +28,7 @@ La page s’enregistre sur le téléphone et une icône **« PLS Urgence »** ap
 
 Ces explications sont aussi dans l’application, via le lien « Mettre une icône sur mon téléphone » en bas de l’écran. Le lien disparaît quand l’application est ouverte depuis l’icône. Sur Android, un bouton permet d’ajouter l’icône directement quand le navigateur le propose.
 
-L’appel au 112 passe par le téléphone et fonctionne sans internet ; la lecture vocale dépend des voix présentes sur l’appareil.
+L’appel au 112 passe par le téléphone et fonctionne sans internet ; la lecture vocale dépend des voix présentes sur l’appareil. **Sur iPhone, la voix est coupée en mode silencieux** : désactivez-le (bouton sur le côté du téléphone) et montez le volume.
 
 ## Ouvrir en local
 
