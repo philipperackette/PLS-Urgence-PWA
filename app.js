@@ -88,19 +88,19 @@ const icon = (name) => ({
 
 /* Préférence vocale conservée d’une utilisation à l’autre. */
 function readVoicePreference() {
-  try { return localStorage.getItem('pls-voice') !== 'off'; } catch (e) { return true; }
+  try { return localStorage.getItem('pls-voice') !== 'off'; } catch { return true; }
 }
 function saveVoicePreference() {
-  try { localStorage.setItem('pls-voice', voiceEnabled ? 'on' : 'off'); } catch (e) { /* stockage indisponible */ }
+  try { localStorage.setItem('pls-voice', voiceEnabled ? 'on' : 'off'); } catch { /* stockage indisponible */ }
 }
 
 /* Écran en cours conservé pendant la session : un rechargement accidentel
    ramène au même écran au lieu de repartir du début. */
 function saveState() {
-  try { sessionStorage.setItem('pls-state', JSON.stringify({ screen: currentScreen, stepIndex, side })); } catch (e) { /* stockage indisponible */ }
+  try { sessionStorage.setItem('pls-state', JSON.stringify({ screen: currentScreen, stepIndex, side })); } catch { /* stockage indisponible */ }
 }
 function readState() {
-  try { return JSON.parse(sessionStorage.getItem('pls-state')) || null; } catch (e) { return null; }
+  try { return JSON.parse(sessionStorage.getItem('pls-state')) || null; } catch { return null; }
 }
 
 /* Garde l’écran allumé pendant l’intervention (mains occupées). */
@@ -112,7 +112,7 @@ async function requestWakeLock() {
   try {
     wakeLock = await navigator.wakeLock.request('screen');
     wakeLock.addEventListener('release', () => { wakeLock = null; });
-  } catch (e) { wakeLock = null; }
+  } catch { wakeLock = null; }
 }
 document.addEventListener('visibilitychange', () => {
   if (wakeLockWanted && document.visibilityState === 'visible') requestWakeLock();

@@ -1,0 +1,27 @@
+{
+  "name": "pls-urgence-pwa",
+  "private": true,
+  "description": "Outils de vérification et de préparation ; l'application elle-même n'a aucune dépendance.",
+  "type": "module",
+  "scripts": {
+    "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
+    "lint:js": "eslint .",
+    "lint:css": "stylelint styles.css",
+    "lint:html": "htmlhint index.html main.html apercu.html",
+    "illustrations": "node tools/generate-illustrations.mjs",
+    "icons": "node tools/export-icons.cjs",
+    "test": "npm run test:static && npm run test:e2e",
+    "test:static": "node --test tests/*.test.mjs",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.56.1",
+    "eslint": "10.13.0",
+    "eslint-plugin-html": "8.2.1",
+    "globals": "17.13.0",
+    "htmlhint": "1.9.2",
+    "stylelint": "17.16.0",
+    "stylelint-config-recommended": "18.0.0"
+  }
+}

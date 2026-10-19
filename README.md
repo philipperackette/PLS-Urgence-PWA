@@ -1,3 +1,5 @@
+[![CI](https://github.com/philipperackette/PLS-Urgence-PWA/actions/workflows/ci.yml/badge.svg)](https://github.com/philipperackette/PLS-Urgence-PWA/actions/workflows/ci.yml)
+
 # PLS Urgence — séquence illustrée
 
 Application statique complète, sans dépendance ni compilation. Version du 27 septembre 2026.
@@ -50,7 +52,7 @@ Décompressez le ZIP et ouvrez `index.html`. Le mode hors ligne et l’icône n�
 - `DESCRIPTIF-IMAGES.md` décrit les positions à contrôler.
 - Les SVG dans `images/` sont générés par `tools/generate-illustrations.mjs` (`node tools/generate-illustrations.mjs`, sans dépendance) : longueurs de membres fixes, coudes et genoux calculés, génération refusée si une position est impossible.
 - `qr-code.svg` : QR code vers le site, affiché en haut de ce document.
-- L’icône est `icons/icon.svg` (lettres « PLS » dessinées en tracés) ; les PNG sont exportés avec `tools/export-icons.cjs` (nécessite Playwright).
+- L’icône est `icons/icon.svg` (lettres « PLS » dessinées en tracés) ; les PNG sont exportés avec `tools/export-icons.cjs` (`npm ci` puis `npm run icons`).
 
 ## Vérifications réalisées
 
@@ -60,6 +62,15 @@ Dans Chromium (Playwright), sur des écrans de 320 × 568, 360 × 640, 390 × 84
 - bouton « Étape suivante » visible sans défiler, pas de défilement horizontal, zones tactiles d’au moins 44 px ;
 - enregistrement du service worker, 26 ressources en cache, ouverture hors ligne (y compris avec paramètres d’URL), reprise après rechargement, aucune erreur JavaScript ;
 - chaque illustration contrôlée visuellement, à l’endroit et inversée ; icônes contrôlées de 40 à 240 px, carrées et rondes.
+
+Ces vérifications sont automatisées (GitHub Actions, à chaque push et pull request) : ESLint, Stylelint et HTMLHint ; contrôle que chaque fichier du cache hors ligne existe et que rien n’y manque, que le manifeste et les icônes sont cohérents, que les SVG publiés sont bien ceux produits par le générateur ; puis 12 scénarios Playwright dans Chromium sur trois tailles d’écran (parcours complet, réanimation, décompte, côté, reprise après rechargement, écran de l’icône, ouverture hors ligne, zones tactiles). L’application n’a toujours aucune dépendance : `package.json` ne sert qu’aux vérifications et à la préparation des images.
+
+```bash
+npm ci
+npm run lint
+npx playwright install chromium
+npm test
+```
 
 Restent à vérifier sur de vrais appareils : l’ajout de l’icône sur iPhone et sur Android, la lecture vocale et le maintien de l’écran allumé. Les illustrations sont une réalisation graphique, sans validation par un formateur en secourisme.
 
